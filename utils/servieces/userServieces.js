@@ -15,39 +15,46 @@ const {
 } = require("../jwt/jwt.config")
 
 // 登录功能
-function login(req, res) {
+function login (req, res) {
   const { username, password } = req.body
-  const sqlStr = `select * from ho_bank_admin_message where username = '${ username }'`
+  const sqlStr = `select * from ho_bank_admin_message where username = '${username}'`
   querySelect(sqlStr)
-  // 注意：这里 .then 不能使用 res 当形参，因为 querySql 方法中已经存在 res 了
-  .then(user => {
-    // console.log(user);
-    if (!user || user.length === 0) {
-      // 用户名或密码错误
-      res.json({
-        code: CODE_ERROR,
-        msg: "用户名或密码错误"
-      })
-    } else {
-      // 登录成功 生成token并返回
-      const token = jwt.sign(
-        // payload : 签发的token里需要包含一些该用户的信息
-        { username },
-        // 私钥
-        PRIVATE_KEY,
-        // 设置过期时间
-        { expiresIn: JWT_EXPIRED }
-      )
-      res.json({
-        code: CODE_SUCCESS,
-        msg: "登录成功",
-        data: {
-          username,
-          token
-        }
-      })
-    }
-  })
+    // 注意：这里 .then 不能使用 res 当形参，因为 querySql 方法中已经存在 res 了
+    .then(user => {
+      console.log(req.body);
+      console.log(user);
+      if (!user || user.length === 0) {
+        // 用户名或密码错误
+        res.json({
+          code: CODE_ERROR,
+          msg: "用户名或密码错误"
+        })
+      } else if (password === user[0].password) {
+        // 登录成功 生成token并返回
+        const token = jwt.sign(
+          // payload : 签发的token里需要包含一些该用户的信息
+          { username },
+          // 私钥
+          PRIVATE_KEY,
+          // 设置过期时间
+          { expiresIn: JWT_EXPIRED }
+        )
+        res.json({
+          code: CODE_SUCCESS,
+          msg: "登录成功",
+          data: {
+            username,
+            token
+          }
+        })
+      } else {
+        // 密码不对
+        res.json({
+          code: CODE_ERROR,
+          msg: "密码错误"
+        })
+      }
+    })
 }
 
 module.exports = {
