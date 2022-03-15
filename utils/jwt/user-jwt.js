@@ -27,7 +27,8 @@ const jwtAuth = expressJWT({
 // 不进行 token 校验的地址
 .unless({
   path: [
-    "/api/login"
+    "/api/login",
+    "/api/checkToken"
   ]
 })
 
@@ -35,14 +36,17 @@ const jwtAuth = expressJWT({
 function decode(req, res) {
   // 获取 请求中的 token
   const token = req.get("Authorization")
+  // console.log(token);
   jwt.verify(token, PRIVATE_KEY, (err, decoded) => {
     if (err) {
       res.json({
-        code: 401
+        code: 401,
+        message: "token验证失败，请重新登录！"
       })
     } else {
       res.json({
-        code: 200
+        code: 200,
+        message: "token验证通过"
       })
     }
   })

@@ -4,5 +4,5 @@ module.exports = {
   CODE_SUCCESS: 200, // 请求相应成功CODE 
   CODE_TOKEN_ERPIRED: 403, // token验证失败 返回
   PRIVATE_KEY: 'hongzhengdianshang', // 密钥
-  JWT_EXPIRED: 60*60*6  //过期时间： 2小时  
+  JWT_EXPIRED: 60*60*4  //过期时间： 4小时  
 }

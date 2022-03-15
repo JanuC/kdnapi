@@ -3,6 +3,8 @@
 // 引入封装好的 mysql 模块
 const { querySelect } = require("../mysql/db")
 
+const { decode } = require("../jwt/user-jwt")
+
 // 引入 jwt 模块， 用于 token 验证
 const jwt = require("jsonwebtoken")
 
@@ -21,8 +23,8 @@ function login (req, res) {
   querySelect(sqlStr)
     // 注意：这里 .then 不能使用 res 当形参，因为 querySql 方法中已经存在 res 了
     .then(user => {
-      console.log(req.body);
-      console.log(user);
+      // console.log(req.body);
+      // console.log(user);
       if (!user || user.length === 0) {
         // 用户名或密码错误
         res.json({
@@ -57,6 +59,12 @@ function login (req, res) {
     })
 }
 
+// token 验证
+function checkToken (req, res) {
+  decode(req, res)
+}
+
 module.exports = {
-  login
+  login,
+  checkToken
 }
