@@ -2,11 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 const userRouter = require("./users")
+const orderRouter = require("./order")
 
 const { jwtAuth } = require("../utils/jwt/user-jwt")
 router.use(jwtAuth)
 
-router.use("/api", userRouter)
+router.use("/api", userRouter, orderRouter)
+
 
 // 自定义统一异常处理中间件，需要放在代码最后
 // router.use((err, req, res, next) => {
