@@ -87,7 +87,7 @@ function getParams (params) {
         'SendSite': '646000',
         'PayType': 1,
         'MonthCode': '1234567890',
-        'TemplateSize': 1301,
+        'TemplateSize': 130,
         'ExpType': 1,
         'Cost': 1.0,
         'OtherCost': 1.0,
@@ -138,8 +138,7 @@ function getParams (params) {
         'Weight': 1.0,
         'Quantity': 1,
         'Volume': 0.0,
-        'IsReturnPrintTemplate': 1,
-        'Remark': '小心轻放'
+        'IsReturnPrintTemplate': 1
     }
     // console.log(JSON.stringify(RequestData) + ApiKey);
     // const DataSign = md5Hex(JSON.stringify(RequestData) + ApiKey).toString('base64')
